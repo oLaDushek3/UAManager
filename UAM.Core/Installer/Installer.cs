@@ -1,32 +1,27 @@
-﻿using System;
-using System.IO.Compression;
-using System.Threading.Tasks;
+﻿using System.IO.Compression;
 using UAM.Core.Api;
 
 namespace UAM.Core.Installer;
 
 public class Installer
 {
-    private ApiUpdate _apiUpdate = new ApiUpdate();
+    private readonly ApiUpdate _apiUpdate = new();
 
     public async Task Install()
     {
-        // var arguments = Environment.GetCommandLineArgs();
-        //
-        // if (arguments.Length < 2)
-        //     throw new ArgumentNullException("version not specified");
+        var arguments = Environment.GetCommandLineArgs();
+        if (arguments.Length < 2)
+            throw new ArgumentNullException("Version not specified");
 
-        await _apiUpdate.GetUpdate("1.0.0");
+        await _apiUpdate.GetUpdate(arguments[1]);
 
-        var path = "C:\\Users\\arshi\\RiderProjects\\UAManager\\ClientLauncher\\bin\\Release\\net8.0-windows";
-
+        var path = Environment.CurrentDirectory;
         var files = Directory.GetFiles(path);
-
         var directories = Directory.GetDirectories(path);
 
         foreach (var file in files)
         {
-            if (file.EndsWith("ClientLauncher.exe"))
+            if (file.EndsWith(".exe") || file.EndsWith(".dll"))
                 continue;
 
             File.Delete(file);
@@ -45,6 +40,6 @@ public class Installer
             Directory.Delete(directory);
         }
 
-        ZipFile.ExtractToDirectory("updates/1.0.0", path);
+        ZipFile.ExtractToDirectory($"updates/{arguments[1]}.zip", path);
     }
 }

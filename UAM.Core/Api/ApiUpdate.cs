@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Text.Json;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using System.Text.Json;
 
 namespace UAM.Core.Api;
 
@@ -12,10 +7,9 @@ public class ApiUpdate : ApiBase
     public async Task<List<Version>> GetAllVersions()
     {
         var client = HttpClient;
-
         var res = await client.GetStringAsync("api/Update/GetAllVersions");
-
-        var options = new JsonSerializerOptions()
+        
+        var options = new JsonSerializerOptions
         {
             PropertyNameCaseInsensitive = true
         };
@@ -26,45 +20,42 @@ public class ApiUpdate : ApiBase
     public async Task GetUpdate(string build)
     {
         var client = HttpClient;
-
-        var filePath = "updates";
-
         var res = await client.GetAsync($"api/Update/GetUpdate?build={build}");
+        
+        const string filePath = "updates";
 
         if (res.IsSuccessStatusCode)
         {
-            Stream fileStream = await res.Content.ReadAsStreamAsync();
+            var fileStream = await res.Content.ReadAsStreamAsync();
             SaveStreamAsFile(filePath, fileStream, $"{build}.zip");
         }
         else
         {
-            throw new Exception("Ошибка при получении файла");
+            throw new Exception("Error receiving the file");
         }
     }
 
     public async Task GetUpdateById(Guid id)
     {
         var client = HttpClient;
-
-        var filePath = "updates";
-
         var res = await client.GetAsync($"api/Update/GetUpdate?build={id}");
+
+        const string filePath = "updates";
 
         if (res.IsSuccessStatusCode)
         {
-            Stream fileStream = await res.Content.ReadAsStreamAsync();
+            var fileStream = await res.Content.ReadAsStreamAsync();
             SaveStreamAsFile(filePath, fileStream, $"{id}.zip");
         }
         else
         {
-            throw new Exception("Ошибка при получении файла");
+            throw new Exception("Error receiving the file");
         }
     }
 
     public async Task<string> GetLastUpdate()
     {
         var client = HttpClient;
-
         var res = await client.GetStringAsync("api/Update/GetLastUpdate");
 
         var options = new JsonSerializerOptions()
