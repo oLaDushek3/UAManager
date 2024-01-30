@@ -1,5 +1,5 @@
 ﻿using System.Windows;
-using ClientLauncher.Pages;
+using ClientLauncher.Views;
 
 namespace ClientLauncher;
 

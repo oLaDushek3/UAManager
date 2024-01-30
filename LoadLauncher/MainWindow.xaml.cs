@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System.Diagnostics;
+using System.IO;
 using System.Windows;
 using UAM.Core.Installer;
 
@@ -15,22 +16,14 @@ public partial class MainWindow : Window
 
     private static async void Install()
     {
-        // var arguments = Environment.GetCommandLineArgs();
-        //
-        // var installer = new Installer();
-        // await installer.Install(arguments[1]);
-        //
-        // var path = Path.Combine(Environment.CurrentDirectory,"ClientLauncher.exe");
-        // System.Diagnostics.Process.Start(path);
-
+        var arguments = Environment.GetCommandLineArgs();
+        
         var installer = new Installer();
-        await installer.Install("fff");
+        await installer.Install(arguments[1]);
 
         Application.Current.Dispatcher.Invoke(() =>
         {
-            var path = Path.Combine(Environment.CurrentDirectory,"ClientLauncher.exe");
-            System.Diagnostics.Process.Start(path, "1.0.0");
-            
+            Process.Start("ClientLauncher.exe");
             Application.Current.Shutdown();
         });
     }

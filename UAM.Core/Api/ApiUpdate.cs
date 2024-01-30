@@ -1,4 +1,5 @@
 ﻿using System.Text.Json;
+using Version = UAM.Core.Models.Version;
 
 namespace UAM.Core.Api;
 

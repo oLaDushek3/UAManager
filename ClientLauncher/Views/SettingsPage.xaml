@@ -1,22 +1,23 @@
-﻿<Page x:Class="ClientLauncher.Pages.SettingsPage"
+﻿<Page x:Class="ClientLauncher.Views.SettingsPage"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:ui="http://schemas.modernwpf.com/2019"
-      xmlns:local="clr-namespace:ClientLauncher.Pages"
       mc:Ignorable="d"
       Title="SettingsPage">
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition/>
-            <ColumnDefinition/>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="1*"/>
         </Grid.ColumnDefinitions>
         
         <StackPanel Grid.Column="0"
                     Margin="15">
+            
             <TextBlock Text="Настройки"
-                       FontSize="18"
+                       FontSize="21"
                        FontWeight="Bold"/>
             
             <TextBox ui:ControlHelper.Header="Сервер"/>
@@ -24,9 +25,22 @@
             <CheckBox Content="Автоматически проверять наличие обновлений" IsChecked="True"/>
         </StackPanel>
         
-        <Button Grid.Column="1" 
-                Content="Скачать последнее обновление" 
-                Click="ButtonBase_OnClick"/>
+        <StackPanel Grid.Column="1"
+                    Margin="10">
+            <ListBox Name="VersionListView"
+                     HorizontalContentAlignment="Stretch"
+                     Background="Transparent">
+                <ListBox.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <WrapPanel HorizontalAlignment="Center"/>
+                    </ItemsPanelTemplate>
+                </ListBox.ItemsPanel>
+            </ListBox>
         
+            <Button HorizontalAlignment="Center"
+                    Margin="5"
+                    Content="Установить"
+                    Click="ButtonBase_OnClick"/>
+        </StackPanel>
     </Grid>
 </Page>

@@ -10,13 +10,6 @@
             <ResourceDictionary.MergedDictionaries>
                 <modernWpf:ThemeResources />
                 <modernWpf:XamlControlsResources />
-
-                <ResourceDictionary>
-                    <Style x:Key="aboba" TargetType="Button">
-                        <Setter Property="Width" Value="400"></Setter>
-                    </Style>
-                </ResourceDictionary>
-
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>
