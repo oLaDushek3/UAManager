@@ -20,9 +20,13 @@
                        FontWeight="Bold"/>
             
             <TextBox ui:ControlHelper.Header="Сервер"/>
-            <CheckBox Content="Не использовать архиватор"/>
-            <CheckBox Content="Автоматически проверять наличие обновлений"/>
+            <CheckBox Content="Не использовать архиватор" IsChecked="True"/>
+            <CheckBox Content="Автоматически проверять наличие обновлений" IsChecked="True"/>
         </StackPanel>
+        
+        <Button Grid.Column="1" 
+                Content="Скачать последнее обновление" 
+                Click="ButtonBase_OnClick"/>
         
     </Grid>
 </Page>
