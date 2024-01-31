@@ -9,15 +9,17 @@ public class Installer
 
     public async Task Install(string version)
     {
+        Thread.Sleep(2000);
+        
         await _apiUpdate.GetUpdate(version);
 
-        var path = "C:\\Users\\oLaDushek\\RiderProjects\\UAManager\\ClientLauncher\\bin\\Debug\\net8.0-windows";
+        var path = Environment.CurrentDirectory;
         var files = Directory.GetFiles(path);
         var directories = Directory.GetDirectories(path);
         
         foreach (var file in files)
         {
-            if (file.EndsWith("LoadLauncher.exe") || file.EndsWith(".dll"))
+            if (file.Contains("LoadLauncher") || file.EndsWith(".dll") || file.EndsWith(".pdb") || file.EndsWith(".json"))
                 continue;
         
             File.Delete(file);
@@ -25,9 +27,9 @@ public class Installer
         
         foreach (var directory in directories)
         {
-            if (directory.EndsWith("updates"))
+            if (directory.Contains("updates"))
                 continue;
-
+        
             var files1 = Directory.GetFiles(directory);
                 
             foreach (var file in files1)
