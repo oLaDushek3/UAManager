@@ -2,20 +2,26 @@
 using System.Windows;
 using System.Windows.Controls;
 using UAM.Core.Api;
+using UAM.Core.AppSettings;
 
 namespace ClientLauncher.Views;
 
 public partial class SettingsPage : Page
 {
-    private readonly ApiUpdate _apiUpdate = new ApiUpdate();
+    private readonly ApiUpdate _apiUpdate = new(AppSettings.Get().ServerName.First());
     
     public SettingsPage()
     {
         InitializeComponent();
-        GetAllVersion();
+        GetData();
+
+        var appSettingsModel = AppSettings.Get();
+        AutoCheckUpdatesCheckBox.IsChecked = appSettingsModel.AutoCheckUpdates;
+        StopAutoCheckWhenErrorsCheckBox.IsChecked = appSettingsModel.StopAutoCheckWhenErrors;
+        UseArchiverCheckBox.IsChecked = appSettingsModel.UseArchiver;
     }
 
-    private async void GetAllVersion()
+    private async void GetData()
     {
         var versions = await _apiUpdate.GetAllVersions();
         var versionsList = versions.Select(version => new VersionView(version)).ToList();

@@ -9,7 +9,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <PackageReference Include="ModernWpfUI" Version="0.9.6" />
+      <PackageReference Include="ModernWpfUI" Version="0.9.7-preview.2" />
       <PackageReference Include="ModernWpfUI.MahApps" Version="0.9.5" />
     </ItemGroup>
 

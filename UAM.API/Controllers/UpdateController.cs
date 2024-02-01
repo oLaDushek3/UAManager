@@ -1,8 +1,6 @@
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using UAM.API.Models;
-using Version = System.Version;
 
 namespace UAM.API.Controllers
 {
@@ -66,6 +64,5 @@ namespace UAM.API.Controllers
 
             return Ok(version);
         }
-        
     }
 }

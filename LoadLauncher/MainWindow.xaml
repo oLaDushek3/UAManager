@@ -3,15 +3,18 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:ui="http://schemas.modernwpf.com/2019"
-        xmlns:modernWpf="http://schemas.modernwpf.com/2019"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:LoadLauncher"
+        xmlns:modernWpf="http://schemas.modernwpf.com/2019"
         mc:Ignorable="d"
         Title="MainWindow" Height="200" Width="225"
+        modernWpf:WindowHelper.UseModernWindowStyle="True"
         WindowStartupLocation="CenterScreen"
         ResizeMode="NoResize"
-        WindowStyle="None">
-    <Grid>
+        WindowStyle="None"
+        Background="Transparent"
+        AllowsTransparency="True">
+    <Border Name="MainSpace" CornerRadius="15">
         <StackPanel HorizontalAlignment="Center"
                     VerticalAlignment="Center">
             <TextBlock HorizontalAlignment="Center"
@@ -20,5 +23,5 @@
             <ui:ProgressRing IsActive="True"
                              Margin="5"/>
         </StackPanel>
-    </Grid>
+    </Border>
 </Window>

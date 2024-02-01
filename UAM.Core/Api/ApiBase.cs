@@ -2,7 +2,12 @@
 
 public class ApiBase
 {
-    private static string BaseUrl => "https://localhost:7206/";
+    private readonly string _baseUrl;
     
-    protected HttpClient HttpClient => new(){BaseAddress = new Uri(BaseUrl)};
+    protected HttpClient HttpClient => new(){BaseAddress = new Uri(_baseUrl)};
+
+    protected ApiBase(string baseUrl)
+    {
+        _baseUrl = baseUrl;
+    }
 }

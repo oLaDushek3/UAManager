@@ -8,6 +8,6 @@ public partial class MainWindow : Window
     public MainWindow()
     {
         InitializeComponent();
-        MainContentControl.Content = new SettingsPage();
+        MainFrame.Content = new SettingsPage();
     }
 }

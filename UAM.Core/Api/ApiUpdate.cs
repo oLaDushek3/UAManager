@@ -1,33 +1,37 @@
 ﻿using System.Text.Json;
-using Version = UAM.Core.Models.Version;
+using VersionModel = UAM.Core.Models.Version;
 
 namespace UAM.Core.Api;
 
 public class ApiUpdate : ApiBase
 {
-    public async Task<List<Version>> GetAllVersions()
+    public ApiUpdate(string baseUrl) : base(baseUrl)
+    {
+    }
+    
+    public async Task<List<VersionModel>> GetAllVersions()
     {
         var client = HttpClient;
-        var res = await client.GetStringAsync("api/Update/GetAllVersions");
-        
+        var response = await client.GetStringAsync("api/Update/GetAllVersions");
+
         var options = new JsonSerializerOptions
         {
             PropertyNameCaseInsensitive = true
         };
 
-        return JsonSerializer.Deserialize<List<Version>>(res, options)!;
+        return JsonSerializer.Deserialize<List<VersionModel>>(response, options)!;
     }
 
     public async Task GetUpdate(string build)
     {
         var client = HttpClient;
-        var res = await client.GetAsync($"api/Update/GetUpdate?build={build}");
+        var response = await client.GetAsync($"api/Update/GetUpdate?build={build}");
         
         const string filePath = "updates";
 
-        if (res.IsSuccessStatusCode)
+        if (response.IsSuccessStatusCode)
         {
-            var fileStream = await res.Content.ReadAsStreamAsync();
+            var fileStream = await response.Content.ReadAsStreamAsync();
             SaveStreamAsFile(filePath, fileStream, $"{build}.zip");
         }
         else
@@ -39,13 +43,13 @@ public class ApiUpdate : ApiBase
     public async Task GetUpdateById(Guid id)
     {
         var client = HttpClient;
-        var res = await client.GetAsync($"api/Update/GetUpdate?build={id}");
+        var response = await client.GetAsync($"api/Update/GetUpdate?build={id}");
 
         const string filePath = "updates";
 
-        if (res.IsSuccessStatusCode)
+        if (response.IsSuccessStatusCode)
         {
-            var fileStream = await res.Content.ReadAsStreamAsync();
+            var fileStream = await response.Content.ReadAsStreamAsync();
             SaveStreamAsFile(filePath, fileStream, $"{id}.zip");
         }
         else
@@ -54,17 +58,17 @@ public class ApiUpdate : ApiBase
         }
     }
 
-    public async Task<string> GetLastUpdate()
+    public async Task<Version> GetLastUpdate()
     {
         var client = HttpClient;
-        var res = await client.GetStringAsync("api/Update/GetLastUpdate");
-
+        var response = await client.GetStringAsync("api/Update/GetLastUpdate");
+        
         var options = new JsonSerializerOptions()
         {
             PropertyNameCaseInsensitive = true
         };
-
-        return JsonSerializer.Deserialize<string>(res, options)!;
+        
+        return ConvertStringToVersion(JsonSerializer.Deserialize<VersionModel>(response, options)!.Build);
     }
 
     private void SaveStreamAsFile(string filePath, Stream inputStream, string fileName)
@@ -75,8 +79,42 @@ public class ApiUpdate : ApiBase
             info.Create();
         }
 
-        string path = Path.Combine(filePath, fileName);
+        var path = Path.Combine(filePath, fileName);
         using FileStream outputFileStream = new FileStream(path, FileMode.Create);
         inputStream.CopyTo(outputFileStream);
+    }
+
+    private Version ConvertStringToVersion(string version)
+    {
+        int major, minor, build, revision = 0;
+        
+        var splitVersion = version.Split(".");
+
+        if (splitVersion.Length is > 4 or < 3)
+            throw new Exception("Wrong version view");
+        
+        if (int.TryParse(splitVersion[0], out int parseMajor))
+            major = parseMajor;
+        else
+            throw new Exception("Wrong version view");
+        
+        if (int.TryParse(splitVersion[1], out int parseMinor))
+            minor = parseMinor;
+        else
+            throw new Exception("Wrong version view");
+        
+        if (int.TryParse(splitVersion[2], out int parseBuild))
+            build = parseBuild;
+        else
+            throw new Exception("Wrong version view");
+
+        if (splitVersion.Length == 4)
+            if(int.TryParse(splitVersion[2], out int parseRevision))
+                revision = parseRevision;
+            else
+                throw new Exception("Wrong version view");
+
+        
+        return new Version(major, minor, build, revision);
     }
 }
