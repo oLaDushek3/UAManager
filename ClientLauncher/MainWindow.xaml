@@ -10,6 +10,14 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="720" Width="1280">
     <Grid>
-        <Frame Name="MainContentControl"/>
+        <Grid Name="DialogPanel"
+              Visibility="Collapsed">
+            <Rectangle Fill="Black" Opacity="0.6"/>
+            <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                <ContentControl Name="DialogContentControl"/>
+            </StackPanel>
+        </Grid>
+        
+        <ContentControl Name="MainContentControl"/>
     </Grid>
 </Window>

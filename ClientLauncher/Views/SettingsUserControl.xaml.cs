@@ -6,11 +6,11 @@ using UAM.Core.AppSettings;
 
 namespace ClientLauncher.Views;
 
-public partial class SettingsPage : Page
+public partial class SettingsUserControl : UserControl
 {
     private readonly ApiUpdate _apiUpdate = new(AppSettings.Get().ServerName.First());
     
-    public SettingsPage()
+    public SettingsUserControl()
     {
         InitializeComponent();
         GetData();

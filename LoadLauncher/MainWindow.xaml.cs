@@ -12,9 +12,12 @@ public partial class MainWindow : Window
     {
         InitializeComponent();
 
-        MainSpace.Background = ThemeManager.Current.ApplicationTheme == ApplicationTheme.Dark
+        MainSpace.Background = ThemeManager.Current.ActualApplicationTheme == ApplicationTheme.Dark
             ? Brushes.Black
             : Brushes.White;
+        MainTextBlock.Foreground= ThemeManager.Current.ActualApplicationTheme == ApplicationTheme.Dark
+            ? Brushes.White
+            : Brushes.Black;
 
         var installThread = new Thread(Install);
         installThread.Start();
@@ -22,6 +25,8 @@ public partial class MainWindow : Window
 
     private static async void Install()
     {
+        Thread.Sleep(2000);
+        
         var arguments = Environment.GetCommandLineArgs();
         var installer = new Installer();
         await installer.Install(arguments[1]);

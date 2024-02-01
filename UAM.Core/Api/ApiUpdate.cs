@@ -109,12 +109,15 @@ public class ApiUpdate : ApiBase
             throw new Exception("Wrong version view");
 
         if (splitVersion.Length == 4)
-            if(int.TryParse(splitVersion[2], out int parseRevision))
-                revision = parseRevision;
-            else
+        {
+            if (!int.TryParse(splitVersion[2], out int parseRevision)) 
                 throw new Exception("Wrong version view");
+            
+            revision = parseRevision;
+            return new Version(major, minor, build, revision);
 
+        }
         
-        return new Version(major, minor, build, revision);
+        return new Version(major, minor, build);
     }
 }

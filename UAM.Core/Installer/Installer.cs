@@ -3,10 +3,12 @@ using UAM.Core.Api;
 using UAM.Core.AppSettings;
 using Settings = UAM.Core.AppSettings.AppSettings;
 
+
 namespace UAM.Core.Installer;
 
 public class Installer
 {
+    
     private readonly AppSettingsModel _appSettings = Settings.Get();
     private ApiUpdate ApiUpdate => new(_appSettings.ServerName.First());
 

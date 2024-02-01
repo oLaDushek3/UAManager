@@ -8,7 +8,6 @@
         xmlns:modernWpf="http://schemas.modernwpf.com/2019"
         mc:Ignorable="d"
         Title="MainWindow" Height="200" Width="225"
-        modernWpf:WindowHelper.UseModernWindowStyle="True"
         WindowStartupLocation="CenterScreen"
         ResizeMode="NoResize"
         WindowStyle="None"
@@ -17,9 +16,10 @@
     <Border Name="MainSpace" CornerRadius="15">
         <StackPanel HorizontalAlignment="Center"
                     VerticalAlignment="Center">
-            <TextBlock HorizontalAlignment="Center"
-                       Text="Загрузка..."
-                       FontSize="18"/>
+            <TextBlock  Name="MainTextBlock" 
+                        HorizontalAlignment="Center"
+                        Text="Загрузка..."
+                        FontSize="18"/>
             <ui:ProgressRing IsActive="True"
                              Margin="5"/>
         </StackPanel>
