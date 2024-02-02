@@ -4,6 +4,7 @@ using System.Windows;
 using ClientLauncher.Views;
 using UAM.Core.Api;
 using UAM.Core.AppSettings;
+using UAM.Core.Models;
 
 namespace ClientLauncher;
 
@@ -18,12 +19,32 @@ public partial class App : Application
         var mainWindow = new MainWindow();
         mainWindow.Show();
 
-        if (AppSettings.Get().AutoCheckUpdates)
+        var settings = AppSettings.Get();
+        try
         {
-            var api = new ApiUpdate(AppSettings.Get().ServerName.FirstOrDefault()!);
+            if (!settings.AutoCheckUpdates) return;
+            
+            var serverUrls = AppSettings.Get().ServerList;
+            Server? availableServer = null;
+
+            foreach (var server in serverUrls.Select(serverUrl => new Server(serverUrl)))
+            {
+                if (await server.CheckServerForAvailability())
+                    availableServer = server;
+            }
+
+            if (availableServer == null)
+            {
+                await mainWindow.CurrentDialogProvider.ShowDialog(
+                    new ErrorDialogUserControl(mainWindow.CurrentDialogProvider,
+                        "Нет доступных серверов"));
+                return;
+            }
+            
+            var api = new ApiUpdate(availableServer.ServerUrl);
             var lastVersion = await api.GetLastUpdate();
             var currentVersion = Assembly.GetExecutingAssembly().GetName().Version;
-
+            
             if (currentVersion < lastVersion)
             {
                 if ((bool)await mainWindow.CurrentDialogProvider.ShowDialog(
@@ -36,5 +57,11 @@ public partial class App : Application
                 }
             }
         }
+        catch
+        {
+            settings.AutoCheckUpdates = false;
+            AppSettings.Set(settings);
+        }
+        
     }
 }

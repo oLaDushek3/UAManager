@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:ClientLauncher.Views"
              mc:Ignorable="d">
-    <Border Padding="5"
+    <Border Padding="10"
             CornerRadius="10"
             Background="#333333">
         <Grid>

@@ -2,7 +2,7 @@
 
 public class AppSettingsModel
 {
-    public List<string> ServerName { get; set; } = null!;
+    public List<string> ServerList { get; set; } = null!;
 
     public bool AutoCheckUpdates { get; set; }
     

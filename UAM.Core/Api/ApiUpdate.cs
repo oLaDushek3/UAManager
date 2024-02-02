@@ -1,4 +1,5 @@
 ﻿using System.Text.Json;
+using Version = System.Version;
 using VersionModel = UAM.Core.Models.Version;
 
 namespace UAM.Core.Api;
@@ -8,7 +9,7 @@ public class ApiUpdate : ApiBase
     public ApiUpdate(string baseUrl) : base(baseUrl)
     {
     }
-    
+
     public async Task<List<VersionModel>> GetAllVersions()
     {
         var client = HttpClient;
@@ -26,7 +27,7 @@ public class ApiUpdate : ApiBase
     {
         var client = HttpClient;
         var response = await client.GetAsync($"api/Update/GetUpdate?build={build}");
-        
+
         const string filePath = "updates";
 
         if (response.IsSuccessStatusCode)
@@ -62,12 +63,12 @@ public class ApiUpdate : ApiBase
     {
         var client = HttpClient;
         var response = await client.GetStringAsync("api/Update/GetLastUpdate");
-        
+
         var options = new JsonSerializerOptions()
         {
             PropertyNameCaseInsensitive = true
         };
-        
+
         return ConvertStringToVersion(JsonSerializer.Deserialize<VersionModel>(response, options)!.Build);
     }
 
@@ -87,22 +88,22 @@ public class ApiUpdate : ApiBase
     private Version ConvertStringToVersion(string version)
     {
         int major, minor, build, revision = 0;
-        
+
         var splitVersion = version.Split(".");
 
         if (splitVersion.Length is > 4 or < 3)
             throw new Exception("Wrong version view");
-        
+
         if (int.TryParse(splitVersion[0], out int parseMajor))
             major = parseMajor;
         else
             throw new Exception("Wrong version view");
-        
+
         if (int.TryParse(splitVersion[1], out int parseMinor))
             minor = parseMinor;
         else
             throw new Exception("Wrong version view");
-        
+
         if (int.TryParse(splitVersion[2], out int parseBuild))
             build = parseBuild;
         else
@@ -110,14 +111,13 @@ public class ApiUpdate : ApiBase
 
         if (splitVersion.Length == 4)
         {
-            if (!int.TryParse(splitVersion[2], out int parseRevision)) 
+            if (!int.TryParse(splitVersion[2], out int parseRevision))
                 throw new Exception("Wrong version view");
-            
+
             revision = parseRevision;
             return new Version(major, minor, build, revision);
-
         }
-        
+
         return new Version(major, minor, build);
     }
 }

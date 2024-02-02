@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace ClientLauncher.Models;
+﻿namespace ClientLauncher.Models;
 
 public partial class Version
 {

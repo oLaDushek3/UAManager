@@ -12,6 +12,6 @@ public partial class MainWindow : Window
     {
         CurrentDialogProvider = new DialogProvider(this);
         InitializeComponent();
-        MainContentControl.Content = new SettingsUserControl();
+        MainContentControl.Content = new SettingsUserControl(this);
     }
 }

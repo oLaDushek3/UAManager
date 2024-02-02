@@ -37,4 +37,14 @@ public class DialogProvider
 
         CloseDialogEvent?.Invoke();
     }
+    
+    public void CloseDialog()
+    {
+        _dialogResult = null;
+        _currentMainWindow.DialogPanel.Visibility = Visibility.Collapsed;
+        _currentMainWindow.DialogContentControl.Content = null;
+        _currentMainWindow.MainContentControl.IsEnabled = true;
+
+        CloseDialogEvent?.Invoke();
+    }
 }

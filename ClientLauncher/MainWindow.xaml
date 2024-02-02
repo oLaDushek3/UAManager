@@ -8,8 +8,12 @@
         ui:WindowHelper.UseModernWindowStyle="True"
         WindowStartupLocation="CenterScreen"
         mc:Ignorable="d"
-        Title="MainWindow" Height="720" Width="1280">
+        Title="ClientLauncher" 
+        Height="720" Width="1280"
+        MinHeight="720" MinWidth="1280">
     <Grid>
+        <ContentControl Name="MainContentControl"/>
+        
         <Grid Name="DialogPanel"
               Visibility="Collapsed">
             <Rectangle Fill="Black" Opacity="0.6"/>
@@ -17,7 +21,5 @@
                 <ContentControl Name="DialogContentControl"/>
             </StackPanel>
         </Grid>
-        
-        <ContentControl Name="MainContentControl"/>
     </Grid>
 </Window>

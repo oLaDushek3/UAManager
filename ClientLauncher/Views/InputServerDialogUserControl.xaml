@@ -1,0 +1,62 @@
+﻿<UserControl x:Class="ClientLauncher.Views.InputServerDialogUserControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:ClientLauncher.Views"
+             xmlns:ui="http://schemas.modernwpf.com/2019"
+             mc:Ignorable="d"
+             d:DesignHeight="150" d:DesignWidth="300"
+             MinHeight="150" MinWidth="350">
+    <Border Name="MainSpace"
+            CornerRadius="15"
+            BorderThickness="1"
+            BorderBrush="#333333">
+        <Grid Margin="10">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+
+            <StackPanel Grid.Row="0">
+                <TextBox Name="ServerPathTextBox"
+                         Margin="10"
+                         VerticalAlignment="Center"
+                         HorizontalAlignment="Stretch"
+                         FontSize="18"
+                         TextWrapping="Wrap"
+                         ui:ControlHelper.PlaceholderText="Введите адрес сервера..." />
+
+                <TextBlock Name="ErrorTextBlock"
+                           Visibility="Collapsed"
+                           Margin="15 0"
+                           VerticalAlignment="Center"
+                           HorizontalAlignment="Center"
+                           FontSize="12"
+                           TextWrapping="Wrap"
+                           TextAlignment="Center"
+                           Foreground="Maroon"/>
+            </StackPanel>
+
+            <StackPanel Grid.Row="1"
+                        Orientation="Horizontal"
+                        HorizontalAlignment="Center">
+
+                <Button IsDefault="True"
+                        Width="100"
+                        Height="40"
+                        Margin="10"
+                        Content="Да"
+                        Click="YesButton_OnClick" />
+
+                <Button Width="100"
+                        Height="40"
+                        Margin="10"
+                        Content="Нет"
+                        Click="NoButton_OnClick" />
+
+            </StackPanel>
+
+        </Grid>
+    </Border>
+</UserControl>
