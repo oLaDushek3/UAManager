@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using NuGet.ProjectModel;
 using UAM.API.Models;
 
 namespace UAM.API.Controllers
@@ -63,6 +64,42 @@ namespace UAM.API.Controllers
             var version = await _context.Versions.OrderByDescending(v => v.Timestamp).FirstOrDefaultAsync();
 
             return Ok(version);
+        }
+        
+        [HttpPost("[action]")]
+        public async Task<IActionResult> AddUpdate(IFormFile uploadedFile)
+        {
+            if (uploadedFile.ContentType != "application/x-zip-compressed")
+                throw new FileFormatException("available only zip");
+
+            var path = $"Files/{uploadedFile.FileName}";
+
+            // save file
+            await using (StreamWriter streamWriter = new StreamWriter(path))
+            {
+                await uploadedFile.CopyToAsync(streamWriter.BaseStream);
+            }
+
+            return Ok();
+        }
+
+        [HttpPost("[action]")]
+        public async Task<IActionResult> CreateVersion(Models.Version version)
+        {
+            try
+            {
+                await _context.Versions.AddAsync(version);
+
+                await _context.SaveChangesAsync();
+
+                return Ok(version);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+
+                return BadRequest(e.Message);
+            }
         }
     }
 }
