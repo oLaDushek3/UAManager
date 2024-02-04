@@ -41,11 +41,10 @@ public partial class SettingsUserControl : UserControl
         foreach (var serverView in serverViewList)
         {
             if (await serverView.FillingElementWithData() && _availableServer == null)
-            {
                 _availableServer = serverView.Server;
-                GetVersionList();
-            }
         }
+        
+        GetVersionList();
     }
 
     private async void GetVersionList()

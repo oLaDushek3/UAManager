@@ -23,7 +23,7 @@ public partial class UaVersionsContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
-        => optionsBuilder.UseNpgsql("Host=localhost;Port=5432;Database=ua_versions;Username=admin;Password=admin");
+        => optionsBuilder.UseNpgsql("Host=212.111.84.182;Port=5432;Database=ua_versions;Username=oladushek;Password=allgirlsarethesame");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

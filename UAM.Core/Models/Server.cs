@@ -13,10 +13,9 @@ public class Server
     
     public async Task<bool> CheckServerForAvailability()
     {
-        var httpClient = new HttpClient { BaseAddress = new Uri(ServerUrl) };
-        
         try
         {
+            var httpClient = new HttpClient { BaseAddress = new Uri(ServerUrl) };
             var response = await httpClient.GetAsync("/");
             if (response.IsSuccessStatusCode)
             {
