@@ -5,7 +5,7 @@ using ClientLauncher.Dialog;
 using ModernWpf;
 using UAM.Core.AppSettings;
 
-namespace ClientLauncher.Views;
+namespace ClientLauncher.DialogViews;
 
 public partial class InputServerDialogUserControl : UserControl
 {

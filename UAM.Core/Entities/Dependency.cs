@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace UAM.API.Models;
+﻿namespace UAM.Core.Entities;
 
 public partial class Dependency
 {

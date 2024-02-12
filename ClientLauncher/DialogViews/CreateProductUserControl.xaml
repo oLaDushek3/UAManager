@@ -1,0 +1,80 @@
+﻿<UserControl x:Class="ClientLauncher.DialogViews.CreateProductUserControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:ClientLauncher.DialogViews"
+             xmlns:ui="http://schemas.modernwpf.com/2019"
+             mc:Ignorable="d"
+             d:DesignHeight="250" d:DesignWidth="350"
+             MinHeight="250" MinWidth="350">
+    <Border Name="MainSpace"
+            CornerRadius="15"
+            BorderThickness="1"
+            BorderBrush="#333333">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+
+            <StackPanel Grid.Row="0" 
+                        Margin="10">
+
+                <TextBox Name="NameTextBox"
+                         Margin="5"
+                         VerticalAlignment="Center"
+                         HorizontalAlignment="Stretch"
+                         FontSize="18"
+                         TextWrapping="Wrap"
+                         ui:ControlHelper.PlaceholderText="Введите название продукта..." />
+
+                <ComboBox Name="UnitOfMeasurementComboBox"
+                          Margin="5"
+                          VerticalAlignment="Center"
+                          HorizontalAlignment="Stretch"
+                          FontSize="18"
+                          ui:ControlHelper.PlaceholderText="Выберите единицу измерения..."
+                          DisplayMemberPath="Name" />
+
+                <TextBox Name="PriceTextBox"
+                         Margin="5"
+                         VerticalAlignment="Center"
+                         HorizontalAlignment="Stretch"
+                         FontSize="18"
+                         TextWrapping="Wrap"
+                         ui:ControlHelper.PlaceholderText="Введите стоимость продукта..."
+                         PreviewTextInput="NumberOnlyTextBox_OnTextInput" />
+
+                <ComboBox Name="VatComboBox"
+                          Margin="5"
+                          VerticalAlignment="Center"
+                          HorizontalAlignment="Stretch"
+                          FontSize="18"
+                          ui:ControlHelper.PlaceholderText="Выберите НДС..."
+                          DisplayMemberPath="Value" />
+
+            </StackPanel>
+
+            <StackPanel Grid.Row="1"
+                        Orientation="Horizontal"
+                        HorizontalAlignment="Center">
+
+                <Button IsDefault="True"
+                        Width="100"
+                        Height="40"
+                        Margin="10"
+                        Content="Создать"
+                        Click="CreateButton_OnClick" />
+
+                <Button Width="100"
+                        Height="40"
+                        Margin="10"
+                        Content="Отмена"
+                        Click="CancelButton_OnClick" />
+
+            </StackPanel>
+
+        </Grid>
+    </Border>
+</UserControl>

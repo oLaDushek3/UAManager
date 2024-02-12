@@ -3,7 +3,6 @@ using System.Windows;
 using System.Windows.Media;
 using ModernWpf;
 using UAM.Core.Installer;
-
 namespace LoadLauncher;
 
 public partial class MainWindow : Window

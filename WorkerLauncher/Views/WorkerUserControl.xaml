@@ -1,0 +1,66 @@
+﻿<UserControl x:Class="WorkerApp.Views.WorkerUserControl"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      mc:Ignorable="d"
+      d:DesignHeight="450" d:DesignWidth="800">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <TextBlock Name="WorkerTextBlock"
+                   Grid.Row="0"
+                   FontWeight="Bold"
+                   Margin="5" />
+
+        <StackPanel Name="TaskStackPanel"
+                    Grid.Row="1"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center">
+
+            <TextBlock Name="TaskTextBlock"
+                       Margin="5" />
+            <TextBlock Name="TimerTextBlock"
+                       Margin="5" />
+            <TextBlock Name="EmailTextBlock"
+                       Margin="5" />
+
+            <Button Width="250"
+                    Height="40"
+                    Margin="5"
+                    Content="Задача не может быть решена мною"  
+                    Click="NotWorkButton_OnClick" />
+            
+            <Button Width="250"
+                    Height="40"
+                    Margin="5"
+                    Content="Нужно больше времени"
+                    Click="MoreTime_OnClick" />
+            
+            <Button Width="250"
+                    Height="40"
+                    Margin="5"
+                    Content="Прислать решение"
+                    Click="SendSolButton_OnClick" />
+        </StackPanel>
+
+        <StackPanel Name="NothingShowStackPanel"
+                    Grid.Row="1"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center">
+            <TextBlock Text="Нет задач"
+                       TextAlignment="Center"
+                       FontSize="20" />
+            
+            <Button Width="250"
+                    Height="40"
+                    Margin="5"
+                    Content="Обновить"
+                    Click="RefreshButton_OnClick" />
+        </StackPanel>
+
+    </Grid>
+</UserControl>

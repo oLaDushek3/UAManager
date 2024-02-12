@@ -12,9 +12,44 @@
         Height="720" Width="1280"
         MinHeight="720" MinWidth="1280">
     <Grid>
-        <ContentControl Name="MainContentControl"/>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        
+        <StackPanel Name="NavigationPanel" 
+                    Grid.Column="0"
+                    Margin="10"
+                    Visibility="Collapsed">
+            
+            <Button HorizontalAlignment="Stretch"
+                    Height="40"
+                    Width="100"
+                    Margin="0 0 0 15"
+                    Content="Продукты"
+                    Click="ProductsButton_OnClick"/>
+            
+            <Button HorizontalAlignment="Stretch"
+                    Height="40"
+                    Width="100"
+                    Margin="0 0 0 15"
+                    Content="Возврат"
+                    Click="RefundsBase_OnClick"/>
+            
+            <Button HorizontalAlignment="Stretch"
+                    Height="40"
+                    Width="100"
+                    Margin="0 0 0 15"
+                    Content="Настройки"
+                    Click="SettingsButton_OnClick"/>
+            
+        </StackPanel>
+        
+        <ContentControl Name="MainContentControl"
+                        Grid.Column="1" />
         
         <Grid Name="DialogPanel"
+              Grid.Column="0" Grid.ColumnSpan="2" 
               Visibility="Collapsed">
             <Rectangle Fill="Black" Opacity="0.6"/>
             <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">

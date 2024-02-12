@@ -2,21 +2,61 @@
 
     <PropertyGroup>
         <OutputType>WinExe</OutputType>
-        <TargetFramework>net7.0-windows</TargetFramework>
+        <TargetFramework>net8.0-windows</TargetFramework>
         <Nullable>enable</Nullable>
         <ImplicitUsings>enable</ImplicitUsings>
         <UseWPF>true</UseWPF>
-        <Version>1.0.0</Version>
-        <Description></Description>
+        <Version>1.0.3</Version>
     </PropertyGroup>
 
     <ItemGroup>
+      <PackageReference Include="DocX" Version="3.0.0" />
+      <PackageReference Include="Humanizer" Version="2.14.1" />
+      <PackageReference Include="MailKit" Version="4.3.0" />
+      <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.1">
+        <PrivateAssets>all</PrivateAssets>
+        <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      </PackageReference>
       <PackageReference Include="ModernWpfUI" Version="0.9.7-preview.2" />
       <PackageReference Include="ModernWpfUI.MahApps" Version="0.9.5" />
+      <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="8.0.0" />
     </ItemGroup>
 
     <ItemGroup>
       <ProjectReference Include="..\LoadLauncher\LoadLauncher.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Entities\" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Page Update="DialogViews\CriticalErrorDialogUserControl.xaml">
+        <Generator>MSBuild:Compile</Generator>
+        <XamlRuntime>Wpf</XamlRuntime>
+        <SubType>Designer</SubType>
+      </Page>
+      <Page Update="DialogViews\ErrorDialogUserControl.xaml">
+        <Generator>MSBuild:Compile</Generator>
+        <XamlRuntime>Wpf</XamlRuntime>
+        <SubType>Designer</SubType>
+      </Page>
+      <Page Update="DialogViews\ConfirmDialogUserControl.xaml">
+        <Generator>MSBuild:Compile</Generator>
+        <XamlRuntime>Wpf</XamlRuntime>
+        <SubType>Designer</SubType>
+      </Page>
+      <Page Update="DialogViews\InputServerDialogUserControl.xaml">
+        <Generator>MSBuild:Compile</Generator>
+        <XamlRuntime>Wpf</XamlRuntime>
+        <SubType>Designer</SubType>
+      </Page>
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Update="template.docx">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
     </ItemGroup>
 
 </Project>

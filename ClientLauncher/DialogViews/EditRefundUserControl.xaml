@@ -1,0 +1,185 @@
+﻿<UserControl x:Class="ClientLauncher.DialogViews.EditRefundUserControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:ui="http://schemas.modernwpf.com/2019"
+             xmlns:local="clr-namespace:ClientLauncher.Views"
+             mc:Ignorable="d"
+             MinHeight="350" MinWidth="525" MaxHeight="720">
+    <Border Name="MainSpace"
+            CornerRadius="15"
+            BorderThickness="1"
+            BorderBrush="#333333">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+
+            <Grid Grid.Row="0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                
+                <ListView Grid.Row="0" Name="ProductListView"
+                          SelectionChanged="ProductListView_OnSelectionChanged"
+                          ScrollViewer.VerticalScrollBarVisibility="Visible">
+                    <ListView.View>
+                        <GridView>
+
+                            <GridViewColumn Header="Название"
+                                            DisplayMemberBinding="{Binding Name}" />
+
+                            <GridViewColumn Header="Еденица измерения"
+                                            DisplayMemberBinding="{Binding UnitOfMeasurement.Name}" />
+
+                            <GridViewColumn Header="Стоимость"
+                                            DisplayMemberBinding="{Binding Price}" />
+
+                            <GridViewColumn Header="НДС"
+                                            DisplayMemberBinding="{Binding Vat.Value}" />
+
+                        </GridView>
+                    </ListView.View>
+                </ListView>
+
+                <StackPanel Grid.Row="1" Orientation="Horizontal"
+                            Margin="10">
+
+                    <ui:NumberBox Name="QuantityNumberBox"
+                                  Height="35"
+                                  FontSize="18"
+                                  Margin="0 0 10 0"
+                                  ValueChanged="QuantityNumberBox_OnValueChanged" />
+
+                    <Button Name="AddProductButton"
+                            Width="100"
+                            Height="35"
+                            Margin="0 0 10 0"
+                            Content="Добавить"
+                            IsEnabled="False"
+                            Click="AddProductButton_OnClick" />
+                    
+                    <Button Name="RemoveProductButton"
+                            Width="100"
+                            Height="35"
+                            Content="Удалить"
+                            IsEnabled="False"
+                            Click="RemoveProductButton_OnClick" />
+
+                </StackPanel>
+
+                <ListView Grid.Row="2" Name="SelectedProductListView"
+                          ScrollViewer.VerticalScrollBarVisibility="Visible"
+                          SelectionChanged="SelectedProductListView_OnSelectionChanged">
+                    <ListView.View>
+                        <GridView>
+
+                            <GridViewColumn Header="Название"
+                                            DisplayMemberBinding="{Binding Product.Name}" />
+
+                            <GridViewColumn Header="Еденица измерения"
+                                            DisplayMemberBinding="{Binding Product.UnitOfMeasurement.Name}" />
+                            
+                            <GridViewColumn Header="Количество"
+                                            DisplayMemberBinding="{Binding Quantity}" />
+
+                            <GridViewColumn Header="Стоимость"
+                                            DisplayMemberBinding="{Binding Product.Price}" />
+
+                            <GridViewColumn Header="НДС"
+                                            DisplayMemberBinding="{Binding Product.Vat.Value}" />
+                            
+                            <GridViewColumn Header="Сумма"
+                                            DisplayMemberBinding="{Binding Amount}" />
+
+                        </GridView>
+                    </ListView.View>
+                </ListView>
+
+            </Grid>
+
+            <StackPanel Grid.Row="1"
+                        Margin="10">
+
+                <TextBlock Name="CounterTextBox"
+                           Margin="5"
+                           VerticalAlignment="Center"
+                           Text="Всего товаров: 0 На сумму: 0"
+                           FontSize="18"
+                           TextWrapping="Wrap" />
+
+                <TextBox Name="CustomerTextBox"
+                         Margin="5"
+                         HorizontalAlignment="Left"
+                         VerticalAlignment="Center"
+                         FontSize="18"
+                         TextWrapping="Wrap"
+                         ui:ControlHelper.PlaceholderText="Введите покупателя..." />
+
+                <DatePicker Name="DatePicker"
+                            Margin="5"
+                            VerticalAlignment="Center"
+                            FontSize="18"
+                            ui:ControlHelper.PlaceholderText="Выберите дату..." />
+
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Margin="5"
+                               VerticalAlignment="Center" 
+                               Text="Чек:" 
+                               FontSize="18" />
+
+                    <ui:NumberBox Name="VoucherNumberBox"
+                                  Margin="5"
+                                  VerticalAlignment="Center"
+                                  FontSize="18"
+                                  ui:ControlHelper.PlaceholderText="Введите номер чека..." />
+
+                    <DatePicker Name="VoucherDatePicker"
+                                Margin="5"
+                                VerticalAlignment="Center"
+                                FontSize="18"
+                                ui:ControlHelper.PlaceholderText="Выберите дату..." />
+                </StackPanel>
+                
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Margin="5"
+                               VerticalAlignment="Center" 
+                               Text="Заявление от покупателя о возврате товара от :" 
+                               FontSize="18" />
+
+                    <DatePicker Name="AnnexDatePicker"
+                                Margin="5"
+                                VerticalAlignment="Center"
+                                FontSize="18"
+                                ui:ControlHelper.PlaceholderText="Выберите дату..." />
+                </StackPanel>
+
+            </StackPanel>
+
+            <StackPanel Grid.Row="2"
+                        HorizontalAlignment="Center"
+                        Orientation="Horizontal">
+
+                <Button IsDefault="True"
+                        Width="100"
+                        Height="40"
+                        Margin="10"
+                        Content="Сохранить"
+                        Click="CreateButton_OnClick" />
+
+                <Button Width="100"
+                        Height="40"
+                        Margin="10"
+                        Content="Отмена"
+                        Click="CancelButton_OnClick" />
+
+            </StackPanel>
+
+        </Grid>
+    </Border>
+</UserControl>

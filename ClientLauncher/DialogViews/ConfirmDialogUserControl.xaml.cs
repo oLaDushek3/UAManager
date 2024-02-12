@@ -4,7 +4,7 @@ using System.Windows.Media;
 using ClientLauncher.Dialog;
 using ModernWpf;
 
-namespace ClientLauncher.Views;
+namespace ClientLauncher.DialogViews;
 
 public partial class ConfirmDialogUserControl : UserControl
 {
@@ -20,13 +20,7 @@ public partial class ConfirmDialogUserControl : UserControl
         MessageTextBlock.Text = message;
     }
 
-    private void YesButton_OnClick(object sender, RoutedEventArgs e)
-    {
-        _currentDialogProvider.CloseDialog(true);
-    }
+    private void YesButton_OnClick(object sender, RoutedEventArgs e) =>  _currentDialogProvider.CloseDialog(true);
 
-    private void NoButton_OnClick(object sender, RoutedEventArgs e)
-    {
-        _currentDialogProvider.CloseDialog(false);
-    }
+    private void NoButton_OnClick(object sender, RoutedEventArgs e) => _currentDialogProvider.CloseDialog(false);
 }

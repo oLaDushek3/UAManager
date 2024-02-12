@@ -7,6 +7,15 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<UaVersionsContext>();
 
+builder.Services.AddCors(cors =>
+{
+    cors.AddDefaultPolicy(options =>
+    {
+        options.AllowAnyMethod()
+            .AllowAnyHeader()
+            .AllowAnyOrigin();
+    });
+});
 
 var app = builder.Build();
 

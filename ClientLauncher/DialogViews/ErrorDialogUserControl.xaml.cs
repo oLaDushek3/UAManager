@@ -4,7 +4,7 @@ using System.Windows.Media;
 using ClientLauncher.Dialog;
 using ModernWpf;
 
-namespace ClientLauncher.Views;
+namespace ClientLauncher.DialogViews;
 
 public partial class ErrorDialogUserControl : UserControl
 {

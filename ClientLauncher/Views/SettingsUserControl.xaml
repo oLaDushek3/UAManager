@@ -15,7 +15,7 @@
         <StackPanel Grid.Column="0"
                     Margin="5">
 
-            <TextBlock Text="Настройки версия 1"
+            <TextBlock Text="Настройки"
                        FontSize="21"
                        FontWeight="Bold" />
 
@@ -44,7 +44,12 @@
 
             </StackPanel>
         </StackPanel>
-
+        
+        <TextBlock Name="CurrentVersionTextBlock" 
+                   Grid.Column="0" 
+                   VerticalAlignment="Bottom"
+                   FontSize="16" />
+        
         <DockPanel Grid.Column="1">
             <StackPanel DockPanel.Dock="Bottom"
                         Margin="5"

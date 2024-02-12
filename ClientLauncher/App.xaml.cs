@@ -1,6 +1,7 @@
 ﻿using System.Diagnostics;
 using System.Reflection;
 using System.Windows;
+using ClientLauncher.DialogViews;
 using ClientLauncher.Views;
 using UAM.Core.Api;
 using UAM.Core.AppSettings;
@@ -35,8 +36,8 @@ public partial class App : Application
 
             if (availableServer == null)
             {
-                await mainWindow.CurrentDialogProvider.ShowDialog(
-                    new ErrorDialogUserControl(mainWindow.CurrentDialogProvider,
+                await mainWindow.MainDialogProvider.ShowDialog(
+                    new ErrorDialogUserControl(mainWindow.MainDialogProvider,
                         "Нет доступных серверов"));
                 return;
             }
@@ -47,8 +48,8 @@ public partial class App : Application
             
             if (currentVersion < lastVersion)
             {
-                if ((bool)await mainWindow.CurrentDialogProvider.ShowDialog(
-                        new ConfirmDialogUserControl(mainWindow.CurrentDialogProvider,
+                if ((bool)await mainWindow.MainDialogProvider.ShowDialog(
+                        new ConfirmDialogUserControl(mainWindow.MainDialogProvider,
                             "У вас устаревшая версия. \n Хотите обновить на актуальную?")))
                 {
                     var ver = lastVersion.ToString();
@@ -57,11 +58,16 @@ public partial class App : Application
                 }
             }
         }
-        catch
+        catch (Exception exception)
         {
-            settings.AutoCheckUpdates = false;
-            AppSettings.Set(settings);
+            mainWindow.MainDialogProvider.ShowDialog(
+                new CriticalErrorDialogUserControl(mainWindow.MainDialogProvider, exception.Message));
+
+            if (settings.StopAutoCheckWhenErrors)
+            {
+                settings.AutoCheckUpdates = false;
+                AppSettings.Set(settings);
+            }
         }
-        
     }
 }

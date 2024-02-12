@@ -1,6 +1,8 @@
 ﻿using System.Diagnostics;
+using System.Reflection;
 using System.Windows;
 using System.Windows.Controls;
+using ClientLauncher.DialogViews;
 using UAM.Core.Api;
 using UAM.Core.AppSettings;
 using UAM.Core.Models;
@@ -16,14 +18,24 @@ public partial class SettingsUserControl : UserControl
 
     public SettingsUserControl(MainWindow mainWindow)
     {
-        _currentMainWindow = mainWindow;
-        InitializeComponent();
-        GetServerList();
+        try
+        {
+            _currentMainWindow = mainWindow;
+            InitializeComponent();
+            GetServerList();
 
-        _appSettings = AppSettings.Get();
-        AutoCheckUpdatesCheckBox.IsChecked = _appSettings.AutoCheckUpdates;
-        StopAutoCheckWhenErrorsCheckBox.IsChecked = _appSettings.StopAutoCheckWhenErrors;
-        UseArchiverCheckBox.IsChecked = _appSettings.UseArchiver;
+            _appSettings = AppSettings.Get();
+            AutoCheckUpdatesCheckBox.IsChecked = _appSettings.AutoCheckUpdates;
+            StopAutoCheckWhenErrorsCheckBox.IsChecked = _appSettings.StopAutoCheckWhenErrors;
+            UseArchiverCheckBox.IsChecked = _appSettings.UseArchiver;
+
+            CurrentVersionTextBlock.Text = $"Текущая версия приложения: {Assembly.GetExecutingAssembly().GetName().Version}";
+        }
+        catch (Exception e)
+        {
+            mainWindow.MainDialogProvider.ShowDialog(
+                new CriticalErrorDialogUserControl(mainWindow.MainDialogProvider, e.Message));
+        }
     }
 
     private async void GetServerList()
@@ -89,8 +101,8 @@ public partial class SettingsUserControl : UserControl
     private async void AddServerButton_OnClick(object sender, RoutedEventArgs e)
     {
         var newServer =
-            await _currentMainWindow.CurrentDialogProvider.ShowDialog(
-                new InputServerDialogUserControl(_currentMainWindow.CurrentDialogProvider));
+            await _currentMainWindow.MainDialogProvider.ShowDialog(
+                new InputServerDialogUserControl(_currentMainWindow.MainDialogProvider));
         if (newServer is string server)
         {
             _appSettings.ServerList.Add(server);
@@ -101,8 +113,8 @@ public partial class SettingsUserControl : UserControl
 
     private async void RemoveServerButton_OnClick(object sender, RoutedEventArgs e)
     {
-        if ((bool)await _currentMainWindow.CurrentDialogProvider.ShowDialog(new ConfirmDialogUserControl(
-                _currentMainWindow.CurrentDialogProvider,
+        if ((bool)await _currentMainWindow.MainDialogProvider.ShowDialog(new ConfirmDialogUserControl(
+                _currentMainWindow.MainDialogProvider,
                 "Сервер будет удален! \n Вы уверены?")))
         {
             var selectedServerIndex =
