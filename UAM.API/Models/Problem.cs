@@ -21,7 +21,7 @@ public partial class Problem
 
     public DateTime? EndTime { get; set; }
 
-    public string Email { get; set; } = null!;
+    public string? Email { get; set; }
 
     public string? Solution { get; set; }
 

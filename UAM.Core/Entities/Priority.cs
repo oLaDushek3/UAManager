@@ -1,4 +1,7 @@
-﻿namespace UAM.Core.Entities;
+﻿using System;
+using System.Collections.Generic;
+
+namespace UAM.Core.Entities;
 
 public partial class Priority
 {

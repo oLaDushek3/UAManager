@@ -40,46 +40,70 @@ public partial class SettingsUserControl : UserControl
 
     private async void GetServerList()
     {
-        var servers = AppSettings.Get().ServerList;
-        var serverViewList = servers.Select(server => new ServerView(new Server(server))).ToList();
-        if (serverViewList.Count == 0)
+        try
         {
-            ServerListViewEmptyMessage.Visibility = Visibility.Visible;
-            VersionListViewEmptyMessage.Text = "Нет доступных серверов";
-            return;
-        }
-        ServerListView.ItemsSource = serverViewList;
+            var servers = AppSettings.Get().ServerList;
+            var serverViewList = servers.Select(server => new ServerView(new Server(server))).ToList();
+            if (serverViewList.Count == 0)
+            {
+                ServerListViewEmptyMessage.Visibility = Visibility.Visible;
+                VersionListViewEmptyMessage.Text = "Нет доступных серверов";
+                return;
+            }
+            ServerListView.ItemsSource = serverViewList;
 
-        foreach (var serverView in serverViewList)
-        {
-            if (await serverView.FillingElementWithData() && _availableServer == null)
-                _availableServer = serverView.Server;
-        }
+            foreach (var serverView in serverViewList)
+            {
+                if (await serverView.FillingElementWithData() && _availableServer == null)
+                    _availableServer = serverView.Server;
+            }
         
-        GetVersionList();
+            GetVersionList();
+        }
+        catch (Exception exception)
+        {
+            _currentMainWindow.MainDialogProvider.ShowDialog(
+                new CriticalErrorDialogUserControl(_currentMainWindow.MainDialogProvider, exception.Message));
+        }
     }
 
     private async void GetVersionList()
     {
-        if (_availableServer != null)
+        try
         {
-            _apiUpdate = new ApiUpdate(_availableServer.ServerUrl);
-            var versions = await _apiUpdate.GetAllVersions();
+            if (_availableServer != null)
+            {
+                _apiUpdate = new ApiUpdate(_availableServer.ServerUrl);
+                var versions = await _apiUpdate.GetAllVersions();
 
-            var versionsList = versions.Select(version => new VersionView(version)).ToList();
-            VersionListView.ItemsSource = versionsList;
+                var versionsList = versions.Select(version => new VersionView(version)).ToList();
+                VersionListView.ItemsSource = versionsList;
 
-            VersionListViewEmptyMessage.Visibility = Visibility.Collapsed;
+                VersionListViewEmptyMessage.Visibility = Visibility.Collapsed;
+            }
+            else
+                VersionListViewEmptyMessage.Text = "Нет доступных серверов";
         }
-        else
-            VersionListViewEmptyMessage.Text = "Нет доступных серверов";
+        catch (Exception exception)
+        {
+            _currentMainWindow.MainDialogProvider.ShowDialog(
+                new CriticalErrorDialogUserControl(_currentMainWindow.MainDialogProvider, exception.Message));
+        }
     }
 
     private void DownloadVersionButton_OnClick(object sender, RoutedEventArgs e)
     {
-        var selectedVersion = ((VersionView)VersionListView.SelectedItem).CurrentVersion;
-        Process.Start("LoadLauncher.exe", selectedVersion.Build);
-        Application.Current.Shutdown();
+        try
+        {
+            var selectedVersion = ((VersionView)VersionListView.SelectedItem).CurrentVersion;
+            Process.Start("LoadLauncher.exe", selectedVersion.Build);
+            Application.Current.Shutdown();
+        }
+        catch (Exception exception)
+        {
+            _currentMainWindow.MainDialogProvider.ShowDialog(
+                new CriticalErrorDialogUserControl(_currentMainWindow.MainDialogProvider, exception.Message));
+        }
     }
 
     private void SaveSettingButton_OnClick(object sender, RoutedEventArgs e)

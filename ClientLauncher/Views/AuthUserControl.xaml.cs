@@ -1,5 +1,6 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
+using ClientLauncher.DialogViews;
 using ClientLauncher.Entities;
 
 namespace ClientLauncher.Views;
@@ -17,17 +18,27 @@ public partial class AuthUserControl : UserControl
 
     private void LoginButton_OnClick(object sender, RoutedEventArgs e)
     {
-        var employee = _context.Employees.FirstOrDefault(em => em.Login == LoginTextBox.Text && em.Password == PasswordBox.Password);
-
-        if (employee == null)
+        try
         {
-            ErrorTextBlock.Visibility = Visibility.Visible;
-            ErrorTextBlock.Text = "Неверный логин или пароль!";
-            return;
+            var employee = _context.Employees.FirstOrDefault(em =>
+                em.Login == LoginTextBox.Text && em.Password == PasswordBox.Password);
+
+            if (employee == null)
+            {
+                ErrorTextBlock.Visibility = Visibility.Visible;
+                ErrorTextBlock.Text = "Неверный логин или пароль!";
+                return;
+            }
+
+            _currentMainWindow.LoginEmployee = employee;
+            _currentMainWindow.MainContentControl.Content = new ProductsUserControl(_currentMainWindow);
+            _currentMainWindow.NavigationPanel.Visibility = Visibility.Visible;
+        }
+        catch (Exception exception)
+        {
+            _currentMainWindow.MainDialogProvider.ShowDialog(
+                new CriticalErrorDialogUserControl(_currentMainWindow.MainDialogProvider, exception.Message));
         }
 
-        _currentMainWindow.LoginEmployee = employee;
-        _currentMainWindow.MainContentControl.Content = new ProductsUserControl(_currentMainWindow);
-        _currentMainWindow.NavigationPanel.Visibility = Visibility.Visible;
     }
 }

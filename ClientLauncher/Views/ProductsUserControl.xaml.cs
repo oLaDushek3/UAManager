@@ -13,14 +13,31 @@ public partial class ProductsUserControl : UserControl
 
     public ProductsUserControl(MainWindow mainWindow)
     {
-        _currentMainWindow = mainWindow;
-        InitializeComponent();
-        GetData();
+        try
+        {
+            _currentMainWindow = mainWindow;
+            InitializeComponent();
+            GetData();
+        }
+        catch (Exception exception)
+        {
+            mainWindow.MainDialogProvider.ShowDialog(
+                new CriticalErrorDialogUserControl(mainWindow.MainDialogProvider, exception.Message));
+        }
     }
 
     private void GetData()
     {
-        ProductListView.ItemsSource = _context.Products.Include(p => p.UnitOfMeasurement).Include(p => p.Vat).ToList();
+        try
+        {
+
+            ProductListView.ItemsSource = _context.Products.Include(p => p.UnitOfMeasurement).Include(p => p.Vat).ToList();
+        }
+        catch (Exception exception)
+        {
+            _currentMainWindow.MainDialogProvider.ShowDialog(
+                new CriticalErrorDialogUserControl(_currentMainWindow.MainDialogProvider, exception.Message));
+        }
     }
 
     private async void CreateProductButton_OnClick(object sender, RoutedEventArgs e)

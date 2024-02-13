@@ -9,7 +9,6 @@ var request = new XMLHttpRequest();
 request.open('GET', 'http://212.111.84.182/api/Update/GetAllProblems', true);
 
 request.onload = function () {
-    // Begin accessing JSON data here
     var data = JSON.parse(this.response);
     if (request.status >= 200 && request.status < 400) {
         data.forEach(problem => {
@@ -47,14 +46,17 @@ request.onload = function () {
             }
 
             p = document.createElement('p');
-            p.innerHTML = 'Пользователь: ' + problem.email;
+            if(problem.email != null)
+                p.innerHTML = 'Пользователь: ' + problem.email;
+            else
+                p.innerHTML = 'Пользователь: Анонимный'
             card.appendChild(p);
 
             container.appendChild(card);
         });
     } else {
         const errorMessage = document.createElement('marquee');
-        errorMessage.innerHTML = `Gah, it's not working!`;
+        errorMessage.innerHTML = `Сервер не отвечает`;
         app.appendChild(errorMessage);
     }
 }

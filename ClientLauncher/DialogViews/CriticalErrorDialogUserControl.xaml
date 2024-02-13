@@ -29,7 +29,7 @@
                 </TextBlock>
                 
                 <TextBox Name="EmailTextBox"
-                         ui:ControlHelper.Header="Почта"/>
+                         ui:ControlHelper.Header="Почта для связи"/>
                 
                 <TextBlock Name="ErrorTextBlock"
                            Visibility="Collapsed"

@@ -26,14 +26,7 @@ public partial class CriticalErrorDialogUserControl : UserControl
     
     private async void ReportButton_OnClick(object sender, RoutedEventArgs e)
     {
-        if (EmailTextBox.Text == string.Empty)
-        {
-            ErrorTextBlock.Visibility = Visibility.Visible;
-            ErrorTextBlock.Text="Введите почту для связи";
-            return;
-        }
-        
-        if (!new EmailAddressAttribute().IsValid(EmailTextBox.Text))
+        if (!string.IsNullOrEmpty(EmailTextBox.Text) && !new EmailAddressAttribute().IsValid(EmailTextBox.Text))
         {
             ErrorTextBlock.Visibility = Visibility.Visible;
             ErrorTextBlock.Text="Неверный формат почты";
