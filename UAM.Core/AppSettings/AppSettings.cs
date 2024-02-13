@@ -10,7 +10,7 @@ public static class AppSettings
 
     private static AppSettingsModel DefaultSettings => new()
     {
-        ServerList = new List<string>{"https://localhost:7206/"},
+        ServerList = new List<string>{"https://localhost:7206/", "http://212.111.84.182/"},
         AutoCheckUpdates = true,
         StopAutoCheckWhenErrors = true,
         UseArchiver = false

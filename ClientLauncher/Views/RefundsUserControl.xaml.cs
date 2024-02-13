@@ -13,7 +13,7 @@ namespace ClientLauncher.Views;
 
 public partial class RefundsUserControl : UserControl
 {
-    private readonly UaClientDbContext _context = new();
+    private UaClientDbContext _context = new();
     private readonly MainWindow _currentMainWindow;
 
     public RefundsUserControl(MainWindow mainWindow)
@@ -35,6 +35,8 @@ public partial class RefundsUserControl : UserControl
     {
         try
         {
+            _context = new();
+            RefundListView.ItemsSource = null;
             RefundListView.ItemsSource = _context.Refunds.Include(r => r.Employee).Include(r => r.RefundProducts)
                 .ThenInclude(rp => rp.Product).ThenInclude(p => p.UnitOfMeasurement).Include(r => r.RefundProducts)
                 .ThenInclude(rp => rp.Product).ThenInclude(p => p.Vat).Include(r => r.Voucher).ToList();

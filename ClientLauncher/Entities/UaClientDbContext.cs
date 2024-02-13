@@ -132,12 +132,12 @@ public partial class UaClientDbContext : DbContext
 
             entity.HasOne(d => d.Product).WithMany(p => p.RefundProducts)
                 .HasForeignKey(d => d.ProductId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
+                .OnDelete(DeleteBehavior.Cascade)
                 .HasConstraintName("refund_product_product_id_fk");
 
             entity.HasOne(d => d.Refund).WithMany(p => p.RefundProducts)
                 .HasForeignKey(d => d.RefundId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
+                .OnDelete(DeleteBehavior.Cascade)
                 .HasConstraintName("refund_product_refund_id_fk");
         });
 

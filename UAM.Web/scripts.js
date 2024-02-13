@@ -14,17 +14,18 @@ request.onload = function () {
         data.forEach(problem => {
             const card = document.createElement('div');
             card.setAttribute('class', 'card');
-
+            
+            let splitProblemText = problem.problemText.split('\r')
+            
             const h1 = document.createElement('h1');
-            h1.innerHTML = problem.problemText.split('\r')[1].substring(0, 125);
+            h1.innerHTML = `${splitProblemText[1].substring(0, 125)}...`;
             card.appendChild(h1);
 
             let p = document.createElement('p');
-            p.innerHTML = `${problem.problemText.split('\r')[1].substring(0, 125)}...`;
+            p.innerHTML = `${problem.problemText.split('\r')[1]}`;
             card.appendChild(p);
 
             p = document.createElement('p');
-            let splitProblemText = problem.problemText.split('\r')
             p.innerHTML = splitProblemText[2] + "<br>" + splitProblemText[3] +
                 "<br>" + splitProblemText[4] + "<br>" + splitProblemText[5];
             card.appendChild(p);

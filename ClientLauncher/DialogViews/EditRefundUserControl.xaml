@@ -170,7 +170,7 @@
                         Height="40"
                         Margin="10"
                         Content="Сохранить"
-                        Click="CreateButton_OnClick" />
+                        Click="SaveButton_OnClick" />
 
                 <Button Width="100"
                         Height="40"

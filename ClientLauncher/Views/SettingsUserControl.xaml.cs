@@ -13,7 +13,7 @@ public partial class SettingsUserControl : UserControl
 {
     private readonly MainWindow _currentMainWindow;
     private ApiUpdate? _apiUpdate;
-    private readonly AppSettingsModel _appSettings;
+    private AppSettingsModel _appSettings;
     private Server? _availableServer;
 
     public SettingsUserControl(MainWindow mainWindow)
@@ -22,13 +22,9 @@ public partial class SettingsUserControl : UserControl
         {
             _currentMainWindow = mainWindow;
             InitializeComponent();
+            GetSettings();
             GetServerList();
-
-            _appSettings = AppSettings.Get();
-            AutoCheckUpdatesCheckBox.IsChecked = _appSettings.AutoCheckUpdates;
-            StopAutoCheckWhenErrorsCheckBox.IsChecked = _appSettings.StopAutoCheckWhenErrors;
-            UseArchiverCheckBox.IsChecked = _appSettings.UseArchiver;
-
+            
             CurrentVersionTextBlock.Text = $"Текущая версия приложения: {Assembly.GetExecutingAssembly().GetName().Version}";
         }
         catch (Exception e)
@@ -36,6 +32,14 @@ public partial class SettingsUserControl : UserControl
             mainWindow.MainDialogProvider.ShowDialog(
                 new CriticalErrorDialogUserControl(mainWindow.MainDialogProvider, e.Message));
         }
+    }
+
+    private void GetSettings()
+    {
+        _appSettings = AppSettings.Get();
+        AutoCheckUpdatesCheckBox.IsChecked = _appSettings.AutoCheckUpdates;
+        StopAutoCheckWhenErrorsCheckBox.IsChecked = _appSettings.StopAutoCheckWhenErrors;
+        UseArchiverCheckBox.IsChecked = _appSettings.UseArchiver;
     }
 
     private async void GetServerList()
@@ -114,7 +118,11 @@ public partial class SettingsUserControl : UserControl
         AppSettings.Set(_appSettings);
     }
 
-    private void ResetSettingButton_OnClick(object sender, RoutedEventArgs e) => AppSettings.SetAppSettingsDefault();
+    private void ResetSettingButton_OnClick(object sender, RoutedEventArgs e)
+    {
+        AppSettings.SetAppSettingsDefault();
+        GetSettings();
+    } 
 
     private void ServerListView_OnMouseLeftButtonDown(object sender, SelectionChangedEventArgs e)
     {

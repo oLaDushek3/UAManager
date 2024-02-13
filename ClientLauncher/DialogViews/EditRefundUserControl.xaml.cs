@@ -14,7 +14,7 @@ public partial class EditRefundUserControl : UserControl
     private readonly DialogProvider _currentDialogProvider;
     private readonly Employee _loginEmployee;
     private readonly UaClientDbContext _context = new();
-    private readonly List<RefundProduct> _selectedProductList = new();
+    private readonly List<RefundProduct> _selectedProductList;
     private readonly Refund _editableRefund;
 
     public EditRefundUserControl(DialogProvider dialogProvider, Employee loginEmployee, Refund selectedRefund)
@@ -36,7 +36,8 @@ public partial class EditRefundUserControl : UserControl
         VoucherDatePicker.SelectedDate = _editableRefund.Date;
         AnnexDatePicker.SelectedDate = _editableRefund.AnnexDate;
 
-        SelectedProductListView.ItemsSource = _editableRefund.RefundProducts;
+        _selectedProductList = _editableRefund.RefundProducts.ToList();
+        SelectedProductListView.ItemsSource = _selectedProductList;
     }
 
     private void GetData()
@@ -88,25 +89,29 @@ public partial class EditRefundUserControl : UserControl
         RemoveProductButton.IsEnabled = false;
     }
 
-    private void CreateButton_OnClick(object sender, RoutedEventArgs e)
+    private void SaveButton_OnClick(object sender, RoutedEventArgs e)
     {
         _editableRefund.Customer = CustomerTextBox.Text;
         _editableRefund.EmployeeId = _loginEmployee.Id;
-        _editableRefund.Date = ((DateTime)DatePicker.SelectedDate!).ToUniversalTime();
+        _editableRefund.Date = ((DateTime)DatePicker.SelectedDate!).AddDays(1).ToUniversalTime();
         _editableRefund.Voucher = new Voucher
         {
             Number = (int)VoucherNumberBox.Value,
             Date =  ((DateTime)VoucherDatePicker.SelectedDate!).ToUniversalTime()
         };
-        _editableRefund.AnnexDate = ((DateTime)AnnexDatePicker.SelectedDate!).ToUniversalTime();
+        _editableRefund.AnnexDate = ((DateTime)AnnexDatePicker.SelectedDate!).AddDays(1).ToUniversalTime();
 
-        var removableProductList = _context.RefundProducts.Where(rp => rp.RefundId == _editableRefund.Id).ToList();
-        foreach (var refundProduct in removableProductList)
+        var deleteRefundProduct = _editableRefund.RefundProducts.Except(_selectedProductList).ToList();
+        foreach (var refundProduct in deleteRefundProduct)
             _context.RefundProducts.Remove(refundProduct);
-        
-        foreach (var refundProduct in _selectedProductList)
-            _context.RefundProducts.Add(refundProduct);
 
+        var addRefundProduct = _selectedProductList.Except(_editableRefund.RefundProducts).ToList();
+        foreach (var refundProduct in addRefundProduct)
+        {
+            refundProduct.Refund = _editableRefund;
+            _context.RefundProducts.Add(refundProduct);
+        }
+        
         _context.SaveChanges();
 
         _currentDialogProvider.CloseDialog(true);
