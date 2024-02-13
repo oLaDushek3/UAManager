@@ -98,7 +98,7 @@ namespace UAM.API.Controllers
         [HttpGet("[action]")]
         public async Task<IActionResult> GetAllProblems()
         {
-            return Ok(await context.Problems.ToListAsync());
+            return Ok(await context.Problems.Include(p => p.Status).ToListAsync());
         }
     }
 }

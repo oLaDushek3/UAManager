@@ -20,6 +20,13 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WorkerLauncher", "WorkerLau
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WorkerEmailReader", "WorkerEmailReader\WorkerEmailReader.csproj", "{55C3B8B5-D8EA-414F-8ADA-EF4507A80C5C}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UAM.Web", "UAM.Web", "{13FF92A7-E5B6-46FF-A455-0E63F0663B2E}"
+	ProjectSection(SolutionItems) = preProject
+		UAM.Web\index.html = UAM.Web\index.html
+		UAM.Web\scripts.js = UAM.Web\scripts.js
+		UAM.Web\style.css = UAM.Web\style.css
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
