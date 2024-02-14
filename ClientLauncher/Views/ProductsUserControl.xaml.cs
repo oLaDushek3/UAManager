@@ -8,7 +8,7 @@ namespace ClientLauncher.Views;
 
 public partial class ProductsUserControl : UserControl
 {
-    private readonly UaClientDbContext _context = new();
+    private UaClientDbContext _context = new();
     private readonly MainWindow _currentMainWindow;
 
     public ProductsUserControl(MainWindow mainWindow)
@@ -30,7 +30,7 @@ public partial class ProductsUserControl : UserControl
     {
         try
         {
-
+            _context = new();
             ProductListView.ItemsSource = _context.Products.Include(p => p.UnitOfMeasurement).Include(p => p.Vat).ToList();
         }
         catch (Exception exception)
